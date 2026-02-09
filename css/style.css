@@ -1,0 +1,27 @@
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 1.5rem;
+  background: #ffffff;
+  color: #111;
+}
+
+#app {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.sentence-block {
+  margin-bottom: 2.5rem;
+}
+
+.prompt {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.chinese {
+  font-size: 1.6rem;
+}
