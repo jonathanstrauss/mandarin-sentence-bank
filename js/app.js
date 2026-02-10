@@ -45,7 +45,7 @@ app.innerHTML = `
   </section>
 
   <nav id="pager" class="pager">
-    <button id="prevBtn" type="button" disabled>← Previous</button>
+    <button id="prevBtn" type="button" disabled>← Prev</button>
     <a class="pager-home" href="../../index.html">Home</a>
     <button id="nextBtn" type="button" disabled>Next →</button>
   </nav>
