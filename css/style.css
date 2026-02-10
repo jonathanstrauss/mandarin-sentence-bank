@@ -83,3 +83,50 @@ button {
   color: #666;
   font-size: 0.95rem;
 }
+
+.controls {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fff;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-top: -1rem;      /* cancels body padding visually */
+  border-bottom: 1px solid #ddd;
+}
+
+.controls .control-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.controls { padding-bottom: 0.75rem; }
+
+.home-link {
+  margin-left: auto;
+  text-decoration: none;
+  color: #0066cc;
+  font-size: 1rem;
+}
+
+.pager {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem 0 0.5rem;
+  border-top: 1px solid #ddd;
+  margin-top: 2rem;
+}
+
+.pager button {
+  padding: 0.55rem 0.8rem;
+}
+
+.pager-home {
+  text-decoration: none;
+  color: #0066cc;
+  padding: 0.55rem 0.8rem;
+}

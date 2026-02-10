@@ -29,6 +29,9 @@ app.innerHTML = `
       </select>
 
       <button id="playBtn" type="button">Play</button>
+
+      <a class="home-link" href="../../index.html">Home</a>
+
     </div>
 
     <div id="audioNote" class="audio-note"></div>
@@ -40,6 +43,13 @@ app.innerHTML = `
   <section id="sentencesContainer">
     <p>Loading…</p>
   </section>
+
+  <nav id="pager" class="pager">
+    <button id="prevBtn" type="button" disabled>← Previous</button>
+    <a class="pager-home" href="../../index.html">Home</a>
+    <button id="nextBtn" type="button" disabled>Next →</button>
+  </nav>
+
 `;
 
 const container = document.getElementById("sentencesContainer");
@@ -47,6 +57,41 @@ const difficultySelect = document.getElementById("difficultySelect");
 const playBtn = document.getElementById("playBtn");
 const audioNote = document.getElementById("audioNote");
 const audio = document.getElementById("audio");
+
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+
+
+setupPager().catch(console.error);
+
+async function setupPager() {
+  // groups.json is at site root; from /groups/group-001/ we go up two levels
+  const res = await fetch("../../groups.json");
+  if (!res.ok) throw new Error("Could not load groups.json for pager");
+  const groups = await res.json();
+
+  const idx = groups.findIndex(g => g.id === window.GROUP_ID);
+  if (idx === -1) return; // group not listed yet
+
+  const prev = groups[idx - 1] || null;
+  const next = groups[idx + 1] || null;
+
+  if (prev) {
+    prevBtn.disabled = false;
+    prevBtn.addEventListener("click", () => {
+      window.location.href = `../${prev.id}/`;
+    });
+  }
+
+  if (next) {
+    nextBtn.disabled = false;
+    nextBtn.addEventListener("click", () => {
+      window.location.href = `../${next.id}/`;
+    });
+  }
+}
+
 
 // ---- Load CSV ----
 fetch(csvPath)
@@ -129,12 +174,18 @@ function applyDifficulty() {
     audioNote.textContent = `Audio loaded: ${audioSrcForLevel(currentLevel)}`;
   }
 
-  const rows = allRows.filter((r) => {
-    if (currentLevel === "both") return true;
-    return (r.level || "").trim().toLowerCase() === currentLevel;
-  });
+  const norm = (s) => (s || "").trim().toLowerCase();
 
+  let rows;
+  if (currentLevel === "both") {
+    const intermediateRows = allRows.filter(r => norm(r.level) === "intermediate");
+    const advancedRows = allRows.filter(r => norm(r.level) === "advanced");
+    rows = [...intermediateRows, ...advancedRows];
+  } else {
+    rows = allRows.filter(r => norm(r.level) === currentLevel);
+  }
   render(rows);
+
 }
 
 // Minimal CSV parser (works with our quoted fields)
